@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ethers } from "ethers";
-import { CLET_CORE_ABI } from "../abi";
+import { CORE_CONTRACT, CORE_CONTRACT_ABI, SKALE_RPC } from "../constants";
 import { useRef } from "react";
 
 export default function Home() {
@@ -9,13 +9,10 @@ export default function Home() {
   const resolveAlLRef = useRef(null);
   const reverseRef = useRef(null);
 
-  const coreAddress = process.env.CLET_CORE_ADDRESS;
-  const skaleProvider = new ethers.providers.JsonRpcProvider(
-    process.env.SKALE_RPC
-  );
+  const skaleProvider = new ethers.providers.JsonRpcProvider(SKALE_RPC);
   const coreContract = new ethers.Contract(
-    coreAddress,
-    CLET_CORE_ABI,
+    CORE_CONTRACT,
+    CORE_CONTRACT_ABI,
     skaleProvider
   );
 
@@ -37,7 +34,7 @@ export default function Home() {
     console.log(enteredName);
     console.log(res);
   }
-  const submitHandler = (e) => e.preventDefault();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -47,26 +44,31 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1>Kindly check the console for the resolved info 💡</h1>
-        <div className={styles.items}>
+        <div className={styles.content}>
+          <h1>Open the browser console for results 😇💚</h1>
           <div>
-            <input type="text" ref={resolveNameRef} placeholder="bob.btc" />
+            <div>
+              <input
+                type="text"
+                ref={resolveNameRef}
+                placeholder="bob.btc/bob.eth/bob.name ..."
+              />
+              <button onClick={resolveName}>Resolve</button>
+            </div>
+            <div>
+              <input type="text" ref={resolveAlLRef} placeholder="bob" />
 
-            <a onClick={resolveName}>Resolve</a>
-          </div>
-          <div>
-            <input type="text" ref={resolveAlLRef} placeholder="bob" />
+              <button onClick={resolveAll}>Resolve All</button>
+            </div>
+            <div>
+              <input
+                type="text"
+                ref={reverseRef}
+                placeholder="bc1qfxxa...y39qvjatm"
+              />
 
-            <a onClick={resolveAll}>Resolve All</a>
-          </div>
-          <div>
-            <input
-              type="text"
-              ref={reverseRef}
-              placeholder="bc1qfxxa...y39qvjatm"
-            />
-
-            <a onClick={reverseLookup}>Reverse Lookup</a>
+              <button onClick={reverseLookup}>Reverse Lookup</button>
+            </div>
           </div>
         </div>
       </main>

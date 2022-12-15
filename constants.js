@@ -1,4 +1,7 @@
-export const CLET_CORE_ABI = [
+export const SKALE_RPC =
+  "https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague";
+export const CORE_CONTRACT = "0x544702D7Df292544F074Ff468D6132fea42b6d34";
+export const CORE_CONTRACT_ABI = [
   {
     inputs: [],
     name: "CletNameService__AlreadyMapped",
